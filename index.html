@@ -6,7 +6,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Digital Library</title>
+<input type="text" id="searchInput" onkeyup="searchBooks()" placeholder="Search for books...">
+
 <style>
+#searchInput {
+    display: block;
+    width: 80%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 12px 20px;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#searchInput:focus {
+    border-color: #3498db;
+}
+
     body { 
         font-family: 'Poppins', sans-serif; 
         background-color: #f8f9fa; 
@@ -88,6 +107,28 @@
 </div>
 
 </div>
+<script>
+    function searchBooks() {
+        // Search input aur cards ko get karein
+        let input = document.getElementById('searchInput');
+        let filter = input.value.toLowerCase();
+        let libraryContainer = document.getElementsByClassName('library-container')[0];
+        let cards = libraryContainer.getElementsByClassName('book-card');
+
+        // Har book card ko loop karein
+        for (let i = 0; i < cards.length; i++) {
+            let title = cards[i].getElementsByTagName("h3")[0];
+            let txtValue = title.textContent || title.innerText;
+            
+            // Check karein ke search query title mein hai ya nahi
+            if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                cards[i].style.display = ""; // Show
+            } else {
+                cards[i].style.display = "none"; // Hide
+            }
+        }
+    }
+</script>
 
 </body>
 </html>
